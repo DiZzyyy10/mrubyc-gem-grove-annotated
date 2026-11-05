@@ -59,6 +59,7 @@ class DPS310
     @wait_time = (@osr_val * 1.5 / 1000.0) + 0.01
   end
 
+  # smt-type: command, boolean
   def read
     if @mode == :command
       # --- コマンドモード: その都度計測 ---
