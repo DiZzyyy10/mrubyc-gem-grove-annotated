@@ -36,6 +36,7 @@ class BMP581
     @i2c.write(@address, [REG_ODR_CONFIG, 0x00])
   end
 
+  # smt-type: command, boolean
   def read
     # Forced Mode
     @i2c.write(@address, [REG_ODR_CONFIG, 0x01])
@@ -60,6 +61,8 @@ class BMP581
     true
   end
 
+  # smt-type: value
   def temperature; @temperature; end
+  # smt-type: value
   def pressure; @pressure; end
 end
