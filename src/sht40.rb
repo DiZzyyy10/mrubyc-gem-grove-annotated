@@ -20,6 +20,7 @@ class SHT40
     sleep 0.001
   end
 
+  # smt-type: command, boolean
   def read
     # 計測コマンド送信
     @i2c.write(ADDR, @cmd)
@@ -50,10 +51,12 @@ class SHT40
     !@temperature.nil? && !@humidity.nil?
   end
 
+  # smt-type: value
   def temperature
     @temperature
   end
 
+  # smt-type: value
   def humidity
     @humidity
   end
