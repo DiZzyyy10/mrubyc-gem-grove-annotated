@@ -56,6 +56,7 @@ class BMP280
     @i2c.write(@address, [REG_CONFIG, 0x00])
   end
 
+  # smt-type: command, boolean
   def read
     return false if @base_ctrl.nil?
     
@@ -92,7 +93,9 @@ class BMP280
     true
   end
 
+  # smt-type: value
   def temperature; @temperature; end
+  # smt-type: value
   def pressure; @pressure; end
 
   private
