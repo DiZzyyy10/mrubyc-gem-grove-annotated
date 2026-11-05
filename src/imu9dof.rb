@@ -70,6 +70,7 @@ class IMU9DOF
 
   # 加速度・角速度・温度を更新する (読み取り失敗時はfalse)
   # sample_periodは旧プログラムとの互換用で、計算には使用しない。
+  # smt-type: command, boolean
   def measure(sample_period = nil)
     return false unless read_icm20600
 
@@ -79,6 +80,7 @@ class IMU9DOF
   end
 
   # measureと同じ測定処理を行う
+  # smt-type: command, boolean
   def read
     measure
   end
