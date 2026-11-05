@@ -39,6 +39,7 @@ class SCD41
   end
 
   # read 内でデータ準備を待つ
+  # smt-type: command, boolean
   def read(timeout_count = 20)
     count = 0
     until data_ready?
@@ -66,8 +67,11 @@ class SCD41
     end
   end
 
+  # smt-type: value
   def co2; @co2; end
+  # smt-type: value
   def temperature; ((@temp * 10).to_i / 10.0); end
+  # smt-type: value
   def humidity; ((@humi * 10).to_i / 10.0); end
 
   private
