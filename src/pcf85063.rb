@@ -8,6 +8,7 @@ class PCF85063
   end
 
   # RTC からの読み込み. 戻り値は数字の配列 [年, 月, 日, 曜, 時, 分, 秒]
+  # smt-type: command, boolean
   def read()
     # 0x04番地から7バイト分読み込み (秒, 分, 時, 日, 曜, 月, 年)
     a = @i2c.read(@address, 7, 0x04).bytes
@@ -28,6 +29,7 @@ class PCF85063
   end
 
   # RTC への書き込み．引数は数字の配列 [年, 月, 日, 曜, 時, 分, 秒]
+  # smt-type: command
   def write(idate)
     date = Array.new
     # BCD データへの変換
@@ -41,19 +43,31 @@ class PCF85063
     sleep 0.1
   end
 
+  # smt-type: value
   def datetime; read(); end
 
+  # smt-type: value
   def str_date();     sprintf("%02d-%02d-%02d", @time[0].to_i, @time[1].to_i, @time[2].to_i); end
+  # smt-type: value
   def str_time();     sprintf("%02d:%02d:%02d", @time[4].to_i, @time[5].to_i, @time[6].to_i); end
+  # smt-type: value
   def str_datetime(); sprintf("20%02d%02d%02d%02d%02d%02d", @time[0].to_i, @time[1].to_i, @time[2].to_i, @time[4].to_i, @time[5].to_i, @time[6].to_i); end
 
+  # smt-type: value
   def year()  ; @time[0].to_i + 2000 ; end
+  # smt-type: value
   def year2() ; @time[0].to_i ; end
+  # smt-type: value
   def mon()   ; @time[1].to_i ; end
+  # smt-type: value
   def mday()  ; @time[2].to_i ; end
+  # smt-type: value
   def wday()  ; @time[3].to_i ; end
+  # smt-type: value
   def hour()  ; @time[4].to_i ; end
+  # smt-type: value
   def min()   ; @time[5].to_i ; end
+  # smt-type: value
   def sec()   ; @time[6].to_i ; end
 end
 
