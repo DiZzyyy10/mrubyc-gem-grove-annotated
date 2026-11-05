@@ -7,6 +7,7 @@ class WS2813
 
   # 1つ1つのLEDの色を変更するメソッド
   # indexを指定しない場合は、最初のLED（単体LEDの場合など）を対象にする
+  # smt-type: command
   def write(index: 0, r: 0, g: 0, b: 0)
     return if index >= @led_count || @handle.nil?
     
@@ -18,6 +19,7 @@ class WS2813
   end
 
   # 全てのLEDの色をキーワード引数で一括指定するメソッド
+  # smt-type: command
   def write_all(r: 0, g: 0, b: 0)
     return if @handle.nil?
     
@@ -30,6 +32,7 @@ class WS2813
   end
 
   # 全て消灯
+  # smt-type: command
   def clear
     write_all(r: 0, g: 0, b: 0)
   end
