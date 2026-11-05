@@ -8,6 +8,7 @@ class AQM0802A
     lcd_write(0x00, [0x38, 0x0c, 0x01])
   end
 
+  # smt-type: hidden
   def lcd_write(opcode, data)
     n = 0
     while n < data.length
@@ -16,14 +17,17 @@ class AQM0802A
     end
   end
 
+  # smt-type: command
   def clear
     lcd_write(0x00, [0x01])
   end
 
+  # smt-type: command
   def cursor(line: 1)
     lcd_write(0x00, [0x80 + (0x40 * (line - 1))])
   end
 
+  # smt-type: command
   def print(s)
     a = Array.new
     str = s.to_s
