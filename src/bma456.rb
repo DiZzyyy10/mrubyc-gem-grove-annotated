@@ -49,6 +49,7 @@ class BMA456
     sleep 0.05
   end
 
+  # smt-type: command, boolean
   def read
     data_raw = @i2c.read(ADDR, 6, REG[:ACC_DATA])
     return false if !data_raw || data_raw.length < 6
