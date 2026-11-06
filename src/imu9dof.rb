@@ -27,16 +27,16 @@ class IMU9DOF
   AK_ST2 = 0x18
   AK_CNTL2 = 0x31
   AK_CNTL3 = 0x32
-
+  
   # 各軸の生データ (符号付き16ビット整数)
   attr_reader :raw_accel_x, :raw_accel_y, :raw_accel_z
   attr_reader :raw_gyro_x, :raw_gyro_y, :raw_gyro_z
   attr_reader :raw_magnet_x, :raw_magnet_y, :raw_magnet_z
   attr_reader :raw_temperature
   # 各軸の換算値：加速度(g)、角速度(度/秒)、地磁気(µT)、温度(℃)
-  attr_reader :accel_x_g, :accel_y_g, :accel_z_g
-  attr_reader :gyro_x_dps, :gyro_y_dps, :gyro_z_dps
-  attr_reader :magnet_x_ut, :magnet_y_ut, :magnet_z_ut
+  attr_reader :accel_x, :accel_y, :accel_z
+  attr_reader :gyro_x, :gyro_y, :gyro_z
+  attr_reader :magnet_x, :magnet_y, :magnet_z
   attr_reader :temperature_c
 
   # I2Cを受け取り、保持する値と2つのセンサーを初期化する
@@ -56,12 +56,12 @@ class IMU9DOF
     @accel_x_g = 0.0
     @accel_y_g = 0.0
     @accel_z_g = 0.0
-    @gyro_x_dps = 0.0
-    @gyro_y_dps = 0.0
-    @gyro_z_dps = 0.0
-    @magnet_x_ut = 0.0
-    @magnet_y_ut = 0.0
-    @magnet_z_ut = 0.0
+    @gyro_x = 0.0
+    @gyro_y = 0.0
+    @gyro_z = 0.0
+    @magnet_x = 0.0
+    @magnet_y = 0.0
+    @magnet_z = 0.0
     @temperature_c = 0.0
 
     configure_icm20600
@@ -137,12 +137,12 @@ class IMU9DOF
 
     # ±2gでは16384 LSB/g、±250 dpsでは131 LSB/(度/秒)
     # 生データを各感度で割り、物理単位へ換算する
-    @accel_x_g = @raw_accel_x / 16384.0
-    @accel_y_g = @raw_accel_y / 16384.0
-    @accel_z_g = @raw_accel_z / 16384.0
-    @gyro_x_dps = @raw_gyro_x / 131.0
-    @gyro_y_dps = @raw_gyro_y / 131.0
-    @gyro_z_dps = @raw_gyro_z / 131.0
+    @accel_x = @raw_accel_x / 16384.0
+    @accel_y = @raw_accel_y / 16384.0
+    @accel_z = @raw_accel_z / 16384.0
+    @gyro_x = @raw_gyro_x / 131.0
+    @gyro_y = @raw_gyro_y / 131.0
+    @gyro_z = @raw_gyro_z / 131.0
     # 温度(℃) = 生データ / 326.8 + 25
     @temperature_c = @raw_temperature / 326.8 + 25.0
     true
@@ -165,9 +165,9 @@ class IMU9DOF
     @raw_magnet_y = int16_le(data.getbyte(2), data.getbyte(3))
     @raw_magnet_z = int16_le(data.getbyte(4), data.getbyte(5))
     # 地磁気の感度：0.15 µT/LSB
-    @magnet_x_ut = @raw_magnet_x * 0.15
-    @magnet_y_ut = @raw_magnet_y * 0.15
-    @magnet_z_ut = @raw_magnet_z * 0.15
+    @magnet_x = @raw_magnet_x * 0.15
+    @magnet_y = @raw_magnet_y * 0.15
+    @magnet_z = @raw_magnet_z * 0.15
     true
   end
 
@@ -200,11 +200,11 @@ imu = IMU9DOF.new(i2c)
 loop do
   if imu.read
     # 加速度 (g単位)
-    puts "Accel: X=#{imu.accel_x_g}, Y=#{imu.accel_y_g}, Z=#{imu.accel_z_g} g"
+    puts "Accel: X=#{imu.accel_x}, Y=#{imu.accel_y}, Z=#{imu.accel_z} g"
     # 角速度 (度/秒)
-    puts "Gyro: X=#{imu.gyro_x_dps}, Y=#{imu.gyro_y_dps}, Z=#{imu.gyro_z_dps} dps"
+    puts "Gyro: X=#{imu.gyro_x}, Y=#{imu.gyro_y}, Z=#{imu.gyro_z} dps"
     # 地磁気 (µT単位、新しいデータがない場合は前回の値)
-    puts "Magnet: X=#{imu.magnet_x_ut}, Y=#{imu.magnet_y_ut}, Z=#{imu.magnet_z_ut} µT"
+    puts "Magnet: X=#{imu.magnet_x}, Y=#{imu.magnet_y}, Z=#{imu.magnet_z} µT"
     # 温度 (℃)
     puts "Temperature: #{imu.temperature_c} ℃"
   else
