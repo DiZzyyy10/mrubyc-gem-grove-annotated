@@ -27,6 +27,7 @@ class TMG39931
     sleep 0.8
   end
 
+  # smt-type: command, boolean
   def read
     # 計測完了待ち
     sleep((256 - @atime) * 0.00278 + 0.05)

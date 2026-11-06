@@ -19,11 +19,13 @@ class VEML6070
     @i2c.write(ADDR_WRITE, [cmd])
   end
 
+  # smt-type: value
   def uv_raw
     @uv_raw
   end
 
   # UVインデックスを計算して返す
+  # smt-type: value
   def uv_index
     # 1T相当に正規化
     normalized = @uv_raw.to_f / @it_config[:multiplier]
@@ -33,10 +35,12 @@ class VEML6070
     ((idx * 100) + 0.5).to_i / 100.0
   end
 
+  # smt-type: value
   def uv
     uv_index
   end
 
+  # smt-type: command, boolean
   def read
     sleep(0.125 * @it_config[:multiplier])
 
@@ -52,6 +56,7 @@ class VEML6070
     end
   end
 
+  # smt-type: value
   def uv_status
     idx = uv_index
     case idx

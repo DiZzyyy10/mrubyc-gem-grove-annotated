@@ -15,6 +15,7 @@ class HX711
   end
 
   # データが準備できるまで待機して読み取る
+  # smt-type: value
   def read_raw
     val = nil
     while val.nil?
@@ -25,6 +26,7 @@ class HX711
   end
 
   # ゼロ点調整
+  # smt-type: command
   def tare(times = 10)
     sum = 0
     times.times do
@@ -35,6 +37,7 @@ class HX711
   end
 
   # キャリブレーションメソッド
+  # smt-type: command
   def calibrate(weight_g, times = 10)
     return 1.0 if weight_g == 0
     
@@ -50,6 +53,7 @@ class HX711
     @scale
   end
 
+  # smt-type: value
   def read(times = 5)
     sum = 0
     times.times { sum += read_raw }
@@ -57,7 +61,9 @@ class HX711
     (avg - @offset) / @scale
   end
   
+  # smt-type: command
   def set_scale(scale); @scale = scale; end
+  # smt-type: value
   def get_scale; @scale; end
 end
 

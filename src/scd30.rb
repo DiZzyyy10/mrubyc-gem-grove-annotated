@@ -18,6 +18,7 @@ class SCD30
     @initialized = false
   end
 
+  # smt-type: command, boolean
   def read
     unless @initialized
       setup_sensor
@@ -46,8 +47,11 @@ class SCD30
     end
   end
 
+  # smt-type: value
   def co2; ((@co2 * 10).to_i / 10.0); end
+  # smt-type: value
   def temperature; ((@temp * 10).to_i / 10.0); end
+  # smt-type: value
   def humidity; ((@humi * 10).to_i / 10.0); end
 
   private

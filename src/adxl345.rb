@@ -26,6 +26,7 @@ class ADXL345
     sleep(0.1)
   end
 
+  # smt-type: command, boolean
   def read
     begin
       data = @i2c.read(I2C_ADDR, 6, REG_DATA_BASE).bytes
@@ -39,11 +40,15 @@ class ADXL345
   end
 
   # 各軸の値を返す (g単位)
+  # smt-type: value
   def x; convert(@x_raw); end
+  # smt-type: value
   def y; convert(@y_raw); end
+  # smt-type: value
   def z; convert(@z_raw); end
 
   # 合成加速度 (x^2 + y^2 + z^2 の平方根)
+  # smt-type: value
   def magnitude
     vx = x
     vy = y
@@ -56,6 +61,7 @@ class ADXL345
   end
 
   # 傾斜角：ロール
+  # smt-type: value
   def roll
     rad = Math.atan2(y, z)
     (rad * 180.0 / Math::PI).to_i
@@ -64,6 +70,7 @@ class ADXL345
   end
 
   # 傾斜角：ピッチ
+  # smt-type: value
   def pitch
     vx = x
     vy = y

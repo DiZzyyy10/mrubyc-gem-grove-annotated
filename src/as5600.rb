@@ -16,6 +16,7 @@ class AS5600
   end
 
   # 計測実行
+  # smt-type: command, boolean
   def read
     begin
       # 12ビットデータを読み出し (高位・低位の2バイト)
@@ -32,6 +33,7 @@ class AS5600
   end
 
   # 角度 (0.0 〜 359.9度) を返す
+  # smt-type: value
   def angle
     # 360度 / 4096ステップ
     deg = (@raw_value * 360.0) / 4096.0
@@ -41,11 +43,13 @@ class AS5600
   end
 
   # 生のカウント値 (0 〜 4095) を返す
+  # smt-type: value
   def angle_raw
     @raw_value
   end
 
   # 磁石の状態を確認する
+  # smt-type: value
   def magnet_status
     status = @i2c.read(I2C_ADDR, 1, REG_STATUS).bytes[0]
     

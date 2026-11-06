@@ -8,10 +8,12 @@ class MY9221
     @leds = Array.new(24, 0)
   end
 
+  # smt-type: command
   def show
     my9221_transmit(@d, @c, @leds)
   end
 
+  # smt-type: command
   def on(id: 0, brightness: 40)
     if id >= 0 && id < 24
       @leds[id] = brightness
@@ -19,6 +21,7 @@ class MY9221
     end
   end
 
+  # smt-type: command
   def clear
     i = 0
     while i < 24
@@ -27,6 +30,7 @@ class MY9221
     end
   end
 
+  # smt-type: command
   def all_on(brightness: 40)
     i = 0
     while i < 24

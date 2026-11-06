@@ -32,10 +32,12 @@ class MCP9808
     set_resolution(resolution)
   end
 
+  # smt-type: command, boolean
   def read
     @temperature = read_temp_c
   end
 
+  # smt-type: command
   def wake
     conf_register = read16(REG_CONFIG)
     conf_wake = conf_register & ~REG_CONFIG_SHUTDOWN
@@ -43,6 +45,7 @@ class MCP9808
     sleep 0.26
   end
 
+  # smt-type: command
   def shutdown
     conf_register = read16(REG_CONFIG)
     conf_shutdown = conf_register | REG_CONFIG_SHUTDOWN

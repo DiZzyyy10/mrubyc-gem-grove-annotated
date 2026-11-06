@@ -27,6 +27,7 @@ class SHT35
     end
   end
 
+  # smt-type: command, boolean
   def read
     @i2c.write(ADDR, @cmd_msb, @cmd_lsb)
     sleep @wait_time
@@ -53,10 +54,12 @@ class SHT35
     !@temperature.nil? && !@humidity.nil?
   end
 
+  # smt-type: value
   def temperature
     @temperature
   end
 
+  # smt-type: value
   def humidity
     @humidity
   end

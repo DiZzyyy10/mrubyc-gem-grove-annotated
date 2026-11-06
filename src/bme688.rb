@@ -52,23 +52,31 @@ class BME688
   end
 
   # --- 低レイヤ操作 ---
+  # smt-type: hidden
   def write8(reg, val); @i2c.write(@address, [reg, val]); end
+  # smt-type: hidden
   def read8(reg); @i2c.read(@address, 1, reg).bytes[0] rescue 0; end
+  # smt-type: hidden
   def read16(reg); b = @i2c.read(@address, 2, reg).bytes; (b[1] << 8) | b[0]; end
 
+  # smt-type: command
   def reset
     write8(REG_RESET, 0xB6)
     sleep 0.2
   end
 
+  # smt-type: hidden
   def set_page(page)
     curr = read8(REG_ADDR_PAGE)
     write8(REG_ADDR_PAGE, (page == 1) ? (curr | 0x10) : (curr & 0xEF))
   end
 
+  # smt-type: hidden
   def to_int8(n); n > 127 ? n - 256 : n; end
+  # smt-type: hidden
   def to_int16(n); n > 32767 ? n - 65536 : n; end
 
+  # smt-type: hidden
   def read_coefficients
     set_page(0)
     @t1 = read16(0xE9); @t2 = to_int16(read16(0x8A)); @t3 = to_int8(read8(0x8C))
@@ -82,6 +90,7 @@ class BME688
   end
 
   # --- 補正計算 ---
+  # smt-type: hidden
   def compensate_t(raw)
     v1 = (raw / 16384.0 - @t1 / 1024.0) * @t2
     v2 = ((raw / 131072.0 - @t1 / 8192.0) * (raw / 131072.0 - @t1 / 8192.0)) * (@t3 * 16.0)
@@ -89,6 +98,7 @@ class BME688
     @t_fine / 5120.0
   end
 
+  # smt-type: hidden
   def compensate_p(raw)
     v1 = (@t_fine / 2.0) - 64000.0
     v2 = v1 * v1 * (@p6 / 131072.0)
@@ -103,6 +113,7 @@ class BME688
     p / 100.0
   end
 
+  # smt-type: hidden
   def compensate_h(raw, temp)
     v1 = raw - (@h1 * 16.0 + (@h3 / 2.0) * temp)
     v2 = v1 * (@h2 / 262144.0 * (1.0 + (@h4 / 16384.0) * temp + (@h5 / 1048576.0) * temp * temp))
@@ -110,6 +121,7 @@ class BME688
     h = 100.0 if h > 100.0; h = 0.0 if h < 0.0; h
   end
 
+  # smt-type: hidden
   def calc_res_heat(target)
     v1 = (@gh1 / 16.0) + 49.0; v2 = ((@gh2 / 32768.0) * 0.0005) + 0.00235; v3 = @gh3 / 1024.0
     v4 = v1 * (1.0 + (v2 * target)); v5 = v4 + (v3 * 25.0)
@@ -117,6 +129,7 @@ class BME688
     res > 255 ? 255 : res
   end
 
+  # smt-type: hidden
   def compensate_gas(raw, range)
     return 0 if raw == 0
     lookup = [1.0, 1.0, 1.0, 1.0, 1.0, 0.99, 1.0, 0.992, 1.0, 1.0, 0.998, 0.995, 1.0, 0.99, 1.0, 1.0]
@@ -125,6 +138,7 @@ class BME688
     res * (1 << range)
   end
 
+  # smt-type: hidden
   def update_iaq_score(gas_res, humi)
     if @burn_in_count < 10
       @gas_reference = gas_res if gas_res > @gas_reference
@@ -142,6 +156,7 @@ class BME688
   end
 
   # --- 測定メイン ---
+  # smt-type: command, boolean
   def read
     set_page(0)
     

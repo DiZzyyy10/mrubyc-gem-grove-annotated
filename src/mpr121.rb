@@ -50,6 +50,7 @@ class MPR121
     @i2c.write(@address, ELE_CFG, 0x8F)
   end
 
+  # smt-type: command, boolean
   def read
     # 状態の読み取りには微小な待ち時間(1ms程度)を設ける
     sleep 0.001
@@ -61,6 +62,7 @@ class MPR121
     true
   end
 
+  # smt-type: boolean
   def touched?(pin)
     (@touched_mask & (1 << pin)) != 0
   end

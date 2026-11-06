@@ -14,6 +14,7 @@ class VL53L0X
   # ---------------------------------------------------------
   # ミリ秒取得関数
   # ---------------------------------------------------------
+  # smt-type: hidden
   def millis
     # C 側で定義した関数がない場合は 0 を返す
     #  -> タイムアウト処理がスキップ
@@ -84,6 +85,7 @@ class VL53L0X
     start_continuous(continuous) if @continuous_mode
   end
 
+  # smt-type: command, boolean
   def read
     val = @continuous_mode ? read_range_continuous_millimeters : read_range_single_millimeters
     if val >= 65535 || @did_timeout
@@ -95,18 +97,25 @@ class VL53L0X
     end
   end
 
+  # smt-type: hidden
   def read_reg(reg); @i2c.read(@address, 1, reg).bytes[0]; end
+  # smt-type: hidden
   def read_reg_16bit(reg)
     d = @i2c.read(@address, 2, reg).bytes
     (d[0] << 8) | d[1]
   end
+  # smt-type: hidden
   def read_multi(reg, cnt); @i2c.read(@address, cnt, reg).bytes; end
 
+  # smt-type: hidden
   def write_reg(reg, val); @i2c.write(@address, [reg, val]); end
+  # smt-type: hidden
   def write_reg_16bit(reg, val); @i2c.write(@address, [reg, (val >> 8) & 0xff, val & 0xff]); end
+  # smt-type: hidden
   def write_reg_32bit(reg, val)
     @i2c.write(@address, [reg, (val >> 24) & 0xff, (val >> 16) & 0xff, (val >> 8) & 0xff, val & 0xff])
   end
+  # smt-type: hidden
   def write_multi(reg, src)
     buf = [reg]
     src.each { |v| buf << v }

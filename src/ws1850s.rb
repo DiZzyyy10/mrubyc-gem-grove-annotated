@@ -9,10 +9,12 @@ class WS1850S
     reset_chip
   end
 
+  # smt-type: value
   def uid
     @uid.map { |b| b.to_s(16).rjust(2, '0').upcase }.join
   end
 
+  # smt-type: command
   def reset_chip
     write_reg(0x01, 0x0F) # Reset
     sleep 0.1
@@ -23,11 +25,13 @@ class WS1850S
     stop_crypto
   end
 
+  # smt-type: hidden
   def stop_crypto
     write_reg(0x08, 0x00)
     @authenticated_sector = nil # 暗号化を切ったら認証状態もリセット
   end
 
+  # smt-type: boolean
   def connected?
     stop_crypto # 新しいカードを探すときはリセット
     
@@ -61,6 +65,7 @@ class WS1850S
     res
   end
 
+  # smt-type: command, boolean
   def puts(msg, block: 4)
     validate_block!(block)
     return false unless authenticate(block)
@@ -82,6 +87,7 @@ class WS1850S
     true
   end
 
+  # smt-type: value
   def gets(block: 4)
     validate_block!(block)
     return nil unless authenticate(block)
