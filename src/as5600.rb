@@ -7,6 +7,7 @@ class AS5600
   REG_ANGLE     = 0x0E # フィルタ・ヒステリシス適用後
   REG_MAGNITUDE = 0x1B # 磁石の強さ
 
+  # smt-param: i2c handle
   def initialize(i2c)
     @i2c = i2c
     @raw_value = 0

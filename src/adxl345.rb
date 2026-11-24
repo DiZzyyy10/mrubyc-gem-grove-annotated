@@ -13,6 +13,7 @@ class ADXL345
     G16: 0x03
   }
 
+  # smt-param: i2c handle
   def initialize(i2c, range: :G2)
     @i2c = i2c
     @range_val = RANGE_SETTINGS[range] || RANGE_SETTINGS[:G2]

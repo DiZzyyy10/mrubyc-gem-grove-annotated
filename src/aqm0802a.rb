@@ -1,5 +1,6 @@
 class AQM0802A
   
+  # smt-param: i2c handle
   def initialize(i2c)
     @i2c = i2c
     sleep(0.1)

@@ -1,6 +1,7 @@
 class WS1850S
   ADDR = 0x28
 
+  # smt-param: i2c handle, address number
   def initialize(i2c, address: ADDR)
     @i2c = i2c
     @address = address

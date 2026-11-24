@@ -9,6 +9,7 @@ class TMG39931
   # ガンマ補正テーブル (0-15のインデックスを 0-255 の出力に変換)
   GAMMA_TABLE = [0, 48, 76, 99, 119, 136, 152, 167, 181, 194, 206, 218, 229, 239, 249, 255]
 
+  # smt-param: i2c handle
   def initialize(i2c, address = 0x39)
     @i2c, @address = i2c, address
     @lux, @proximity = 0, 0

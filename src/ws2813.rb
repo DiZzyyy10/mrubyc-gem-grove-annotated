@@ -1,4 +1,5 @@
 class WS2813
+  # smt-param: gpio_pin number
   def initialize(gpio_pin, led_count: 1)
     @led_count = led_count
     # C言語の初期化関数を呼び出し、ハンドルを取得

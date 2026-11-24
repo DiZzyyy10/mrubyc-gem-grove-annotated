@@ -1,4 +1,5 @@
 class PCF85063
+  # smt-param: i2c handle
   def initialize(i2c)
     @i2c = i2c
     @address = 0x51
@@ -30,6 +31,7 @@ class PCF85063
 
   # RTC への書き込み．引数は数字の配列 [年, 月, 日, 曜, 時, 分, 秒]
   # smt-type: command
+  # smt-param: idate array
   def write(idate)
     date = Array.new
     # BCD データへの変換

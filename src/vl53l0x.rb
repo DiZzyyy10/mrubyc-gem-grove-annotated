@@ -21,6 +21,7 @@ class VL53L0X
     0 
   end
 
+  # smt-param: i2c handle, continuous number
   def initialize(i2c, timeout_ms: 500, continuous: nil)
     @i2c = i2c
     @address = ADDRESS

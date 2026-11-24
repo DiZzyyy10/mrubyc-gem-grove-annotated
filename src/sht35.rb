@@ -8,6 +8,7 @@ class SHT35
     low:    [0x2c, 0x10, 0.004]
   }
 
+  # smt-param: i2c handle
   def initialize(i2c, repeatability: :high)
     @i2c = i2c
     

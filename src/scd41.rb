@@ -9,6 +9,7 @@ class SCD41
   CMD_SET_ALTITUDE      = [0x24, 0x27]
   CMD_SET_ASC           = [0x24, 0x16]
 
+  # smt-param: i2c handle
   def initialize(i2c, options = {})
     @i2c = i2c
     @co2, @temp, @humi = 0, 0.0, 0.0

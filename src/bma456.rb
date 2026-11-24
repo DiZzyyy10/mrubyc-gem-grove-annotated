@@ -18,6 +18,7 @@ class BMA456
 
   attr_reader :accel, :accel_raw, :temperature, :sw_steps, :hw_steps, :tilt
 
+  # smt-param: i2c handle
   def initialize(i2c, range: :g4)
     @i2c = i2c
     @accel = { x: 0.0, y: 0.0, z: 0.0 }

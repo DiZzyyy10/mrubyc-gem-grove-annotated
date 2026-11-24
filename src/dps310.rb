@@ -18,6 +18,7 @@ class DPS310
     x1: 0, x2: 1, x4: 2, x8: 3, x16: 4, x32: 5, x64: 6, x128: 7
   }
 
+  # smt-param: i2c handle
   def initialize(i2c, options = {})
     @i2c  = i2c
     @addr = options[:addr] || 0x77

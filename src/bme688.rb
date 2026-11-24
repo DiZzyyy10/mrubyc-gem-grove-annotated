@@ -16,6 +16,7 @@ class BME688
 
   attr_reader :temperature, :humidity, :pressure, :gas_resistance, :gas_score
 
+  # smt-param: i2c handle
   def initialize(i2c, options = {})
     @i2c = i2c
     @address = options[:address] || ADDR

@@ -40,6 +40,7 @@ class IMU9DOF
   attr_reader :temperature_c
 
   # I2Cを受け取り、保持する値と2つのセンサーを初期化する
+  # smt-param: i2c handle
   def initialize(i2c)
     @i2c = i2c
 
@@ -71,6 +72,7 @@ class IMU9DOF
   # 加速度・角速度・温度を更新する (読み取り失敗時はfalse)
   # sample_periodは旧プログラムとの互換用で、計算には使用しない。
   # smt-type: command, boolean
+  # smt-param: sample_period number
   def measure(sample_period = nil)
     return false unless read_icm20600
 

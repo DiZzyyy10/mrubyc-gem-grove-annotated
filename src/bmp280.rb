@@ -11,6 +11,7 @@ class BMP280
 
   OSRS_MAP = { none: 0x00, x1: 0x01, x2: 0x02, x4: 0x03, x8: 0x04, x16: 0x05 }
 
+  # smt-param: i2c handle
   def initialize(i2c, options = {})
     @i2c = i2c
     @address = options[:address] || ADDR

@@ -11,6 +11,7 @@ class SCD30
   CMD_SET_ALTITUDE      = [0x51, 0x02]
   CMD_SET_TEMP_OFFSET   = [0x54, 0x03]
 
+  # smt-param: i2c handle
   def initialize(i2c, options = {})
     @i2c = i2c
     @co2, @temp, @humi = 0.0, 0.0, 0.0

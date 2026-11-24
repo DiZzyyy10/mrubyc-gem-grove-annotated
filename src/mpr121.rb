@@ -18,6 +18,7 @@ class MPR121
 
   attr_reader :touched_mask
 
+  # smt-param: i2c handle, address number
   def initialize(i2c, address: ADDR, touch_level: :medium, release_level: :medium)
     @i2c = i2c
     @address = address
@@ -63,6 +64,7 @@ class MPR121
   end
 
   # smt-type: boolean
+  # smt-param: pin number
   def touched?(pin)
     (@touched_mask & (1 << pin)) != 0
   end

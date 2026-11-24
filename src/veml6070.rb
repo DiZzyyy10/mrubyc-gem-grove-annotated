@@ -10,6 +10,7 @@ class VEML6070
     T4:   { cmd: 0x03, multiplier: 4.0 }
   }
 
+  # smt-param: i2c handle
   def initialize(i2c, it: :T1)
     @i2c = i2c
     @it_config = IT_SETTINGS[it] || IT_SETTINGS[:T1]

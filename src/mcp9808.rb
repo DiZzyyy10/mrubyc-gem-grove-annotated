@@ -16,6 +16,7 @@ class MCP9808
 
   attr_reader :temperature
 
+  # smt-param: i2c handle
   def initialize(i2c, resolution: :ultra)
     @i2c = i2c
     @temperature = nil

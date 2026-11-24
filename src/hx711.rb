@@ -1,7 +1,9 @@
 class HX711
   attr_reader :size, :offset
+  # smt-param: value number
   attr_accessor :scale
 
+  # smt-param: dat_pin number, clk_pin number
   def initialize(dat_pin:, clk_pin:, size: 5, offset: -141153, scale: 420.5)
     @dat = dat_pin
     @clk = clk_pin
@@ -38,6 +40,7 @@ class HX711
 
   # キャリブレーションメソッド
   # smt-type: command
+  # smt-param: weight_g number
   def calibrate(weight_g, times = 10)
     return 1.0 if weight_g == 0
     
@@ -62,6 +65,7 @@ class HX711
   end
   
   # smt-type: command
+  # smt-param: scale number
   def set_scale(scale); @scale = scale; end
   # smt-type: value
   def get_scale; @scale; end
